@@ -142,7 +142,7 @@ smartsig keyword is entered in the buffer."
 
 ;; Structure for holding signature information.
 
-(defstruct smartsig
+(cl-defstruct smartsig
   (id         "")
   (keywords   nil)
   (signature  "")
