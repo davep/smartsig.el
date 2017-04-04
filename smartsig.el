@@ -165,7 +165,7 @@ smartsig keyword is entered in the buffer."
     (push (make-smartsig :id id :keywords keywords :signature signature) smartsig-sigs)
     (loop for keyword in keywords
           do (define-abbrev (symbol-value smartsig-abbrev-table) keyword 1 `(lambda () (smartsig ,id))))))
-  
+
 (defun smartsig-wordcount (word)
   "Count how many times WORD appears in the current buffer."
   (save-excursion
