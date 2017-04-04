@@ -1,6 +1,11 @@
 ;;; smartsig.el --- Smart signature selection based on message content.
-;; Copyright 2000,2001,2002 by Dave Pearson <davep@davep.org>
-;; $Revision: 1.12 $
+;; Copyright 2000-2017 by Dave Pearson <davep@davep.org>
+
+;; Author: Dave Pearson <davep@davep.org>
+;; Version: 1.12
+;; Keywords: convenience
+;; URL: https://github.com/davep/smartsig.el
+;; Package-Requires: ((cl-lib "0.5"))
 
 ;; smartsig.el is free software distributed under the terms of the GNU
 ;; General Public Licence, version 2. For details see the file COPYING.
