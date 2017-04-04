@@ -52,7 +52,7 @@
 ;;
 ;; The latest smartsig.el is always available from:
 ;;
-;;   <URL:http://www.davep.org/emacs/smartsig.el>
+;;   <URL:https://github.com/davep/smartsig.el>
 
 ;;; INSTALLATION:
 ;;
@@ -157,7 +157,10 @@ smartsig keyword is entered in the buffer."
 
 ;;;###autoload
 (defun smartsig-add (id signature &rest keywords)
-  "Add a smart signature."
+  "Add a smart signature.
+
+Adds a signure with ID, the signature file being SIGNATURE, and for the
+given KEYWORDS."
   (unless (cl-find id smartsig-sigs :test #'(lambda (id sig) (string= id (smartsig-id sig))))
     (push (make-smartsig :id id :keywords keywords :signature signature) smartsig-sigs)
     (loop for keyword in keywords
@@ -212,7 +215,9 @@ smartsig keyword is entered in the buffer."
           (car sigs))))))
 
 (defun smartsig-disabled-p (id)
-  "Check if this smartsig check should be disabled."
+  "Check if this smartsig check should be disabled.
+
+ID is the ID of the smart signire to check for."
   (loop for check in smartsig-ignore-checks if (funcall check id) return t))
 
 (defun smartsig (id)
