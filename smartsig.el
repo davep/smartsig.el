@@ -80,7 +80,7 @@
 
 ;; Things we need:
 
-(require 'cl)
+(require 'cl-lib)
 
 ;; Customize options.
 
@@ -158,7 +158,7 @@ smartsig keyword is entered in the buffer."
 ;;;###autoload
 (defun smartsig-add (id signature &rest keywords)
   "Add a smart signature."
-  (unless (find id smartsig-sigs :test #'(lambda (id sig) (string= id (smartsig-id sig))))
+  (unless (cl-find id smartsig-sigs :test #'(lambda (id sig) (string= id (smartsig-id sig))))
     (push (make-smartsig :id id :keywords keywords :signature signature) smartsig-sigs)
     (loop for keyword in keywords
           do (define-abbrev (symbol-value smartsig-abbrev-table) keyword 1 `(lambda () (smartsig ,id))))))
@@ -204,7 +204,7 @@ smartsig keyword is entered in the buffer."
         ;; Was there a tie?
         (if (smartsig-tied-p sigs)
             ;; Yes. Ok, so, is ID in the list of tied signatures?
-            (let ((which (position id sigs :test #'(lambda (id sig) (string= id (smartsig-id sig))))))
+            (let ((which (cl-position id sigs :test #'(lambda (id sig) (string= id (smartsig-id sig))))))
               (when which
                 ;; Yes, it is, use that one.
                 (nth which sigs)))
