@@ -163,26 +163,26 @@ Adds a signure with ID, the signature file being SIGNATURE, and for the
 given KEYWORDS."
   (unless (cl-find id smartsig-sigs :test #'(lambda (id sig) (string= id (smartsig-id sig))))
     (push (make-smartsig :id id :keywords keywords :signature signature) smartsig-sigs)
-    (loop for keyword in keywords
-          do (define-abbrev (symbol-value smartsig-abbrev-table) keyword 1 `(lambda () (smartsig ,id))))))
+    (cl-loop for keyword in keywords
+       do (define-abbrev (symbol-value smartsig-abbrev-table) keyword 1 `(lambda () (smartsig ,id))))))
 
 (defun smartsig-wordcount (word)
   "Count how many times WORD appears in the current buffer."
   (save-excursion
     (setf (point) (point-min))
     (let ((re (format "\\b%s\\b" word)))
-      (loop while (re-search-forward re nil t)
-            count t
-            do (incf (point))))))
+      (cl-loop while (re-search-forward re nil t)
+         count t
+         do (incf (point))))))
 
 (defun smartsig-rankings ()
   "Return a ranked list of signatures."
   (save-excursion
     (save-restriction
       (narrow-to-region (funcall smartsig-start-of-body-function) (funcall smartsig-end-of-body-function))
-      (loop for sig in smartsig-sigs
-            do (setf (smartsig-last-count sig) (loop for keyword in (smartsig-keywords sig)
-                                                     sum (smartsig-wordcount keyword))))
+      (cl-loop for sig in smartsig-sigs
+         do (setf (smartsig-last-count sig) (cl-loop for keyword in (smartsig-keywords sig)
+                                               sum (smartsig-wordcount keyword))))
       (sort (copy-sequence smartsig-sigs)
             #'(lambda (x y)
                 (> (smartsig-last-count x) (smartsig-last-count y)))))))
@@ -191,9 +191,9 @@ given KEYWORDS."
   "Return the most popular signature choices in RANKINGS."
   (when rankings
     (let ((top (smartsig-last-count (car rankings))))
-      (loop for sig in rankings
-            when (= top (smartsig-last-count sig))
-            collect sig))))
+      (cl-loop for sig in rankings
+         when (= top (smartsig-last-count sig))
+         collect sig))))
 
 (defun smartsig-tied-p (rankings)
   "Is there a tie at the top of RANKINGS?"
@@ -218,7 +218,7 @@ given KEYWORDS."
   "Check if this smartsig check should be disabled.
 
 ID is the ID of the smart signire to check for."
-  (loop for check in smartsig-ignore-checks if (funcall check id) return t))
+  (cl-loop for check in smartsig-ignore-checks if (funcall check id) return t))
 
 (defun smartsig (id)
   "Set the signature based on the content of the current buffer."
