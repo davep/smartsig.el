@@ -96,7 +96,7 @@
         (if (search-forward-regexp "^$" nil t)
             (point)
           (point-min))))
-  "*Function for returning the `point' of the start of the message body."
+  "Function for returning the `point' of the start of the message body."
   :type  'function
   :group 'smartsig)
 
@@ -107,14 +107,14 @@
         (if (search-forward-regexp "^-- $" nil t)
             (point)
           (point-max))))
-  "*Function for returning the `point' of the end of the message body."
+  "Function for returning the `point' of the end of the message body."
   :type  'function
   :group 'smartsig)
 
 (defcustom smartsig-set-signature
   #'(lambda (file)
       (message "If you'd set `smartsig-set-signature' the signature would actually have been set."))
-  "*Function for setting the signature.
+  "Function for setting the signature.
 
 The function should take one parameter: the name of the file that contains
 the signature to be set."
@@ -122,12 +122,12 @@ the signature to be set."
   :group 'smartsig)
 
 (defcustom smartsig-abbrev-table 'global-abbrev-table
-  "*The name of the abbrev table to use."
+  "The name of the abbrev table to use."
   :type  'symbol
   :group 'smartsig)
 
 (defcustom smartsig-ignore-checks nil
-  "*List of functions for checking if a smartsig check should be ignored.
+  "List of functions for checking if a smartsig check should be ignored.
 
 If any function in the list returns a non-nil value then that smartsig check
 will be disabled. Note that each function in this list is called each time a
