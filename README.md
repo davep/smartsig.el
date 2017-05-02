@@ -27,7 +27,7 @@ items are:
   article (IOW the first bit of text after any headers).
 
 - `smartsig-end-of-body-function` : This variable should be set to point to
-  a function that will return the `point' of the end of the body of the
+  a function that will return the `point` of the end of the body of the
   article (IOW the `point' before the signature).
 
 - `smartsig-set-signature` : This variable should be set to point to a
