@@ -23,12 +23,12 @@ of smartsig need to be configured before it will work. The configuration
 items are:
 
 - `smartsig-start-of-body-function` : This variable should be set to point
-  to a function that will return the `point' of the start of the body of the
+  to a function that will return the `point` of the start of the body of the
   article (IOW the first bit of text after any headers).
 
 - `smartsig-end-of-body-function` : This variable should be set to point to
   a function that will return the `point` of the end of the body of the
-  article (IOW the `point' before the signature).
+  article (IOW the `point` before the signature).
 
 - `smartsig-set-signature` : This variable should be set to point to a
   function that will set the signature. The function should take a single
@@ -49,7 +49,7 @@ The latest smartsig.el is always available from:
 
 ## Installation:
 
-- Drop smartsig.el somewhere into your `load-path'. Try your site-lisp
+- Drop smartsig.el somewhere into your `load-path`. Try your site-lisp
   directory for example (you might also want to byte-compile the file).
 
 - Because smartsig needs to be used with your editing mode of choice you
