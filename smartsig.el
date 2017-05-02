@@ -90,30 +90,30 @@
   :prefix "smartsig-")
 
 (defcustom smartsig-start-of-body-function
-  #'(lambda ()
-      (save-excursion
-        (setf (point) (point-min))
-        (if (search-forward-regexp "^$" nil t)
-            (point)
-          (point-min))))
+  (lambda ()
+    (save-excursion
+      (setf (point) (point-min))
+      (if (search-forward-regexp "^$" nil t)
+          (point)
+        (point-min))))
   "Function for returning the `point' of the start of the message body."
   :type  'function
   :group 'smartsig)
 
 (defcustom smartsig-end-of-body-function
-  #'(lambda ()
-      (save-excursion
-        (setf (point) (point-min))
-        (if (search-forward-regexp "^-- $" nil t)
-            (point)
-          (point-max))))
+  (lambda ()
+    (save-excursion
+      (setf (point) (point-min))
+      (if (search-forward-regexp "^-- $" nil t)
+          (point)
+        (point-max))))
   "Function for returning the `point' of the end of the message body."
   :type  'function
   :group 'smartsig)
 
 (defcustom smartsig-set-signature
-  #'(lambda (file)
-      (message "If you'd set `smartsig-set-signature' the signature would actually have been set."))
+  (lambda (file)
+    (message "If you'd set `smartsig-set-signature' the signature would actually have been set."))
   "Function for setting the signature.
 
 The function should take one parameter: the name of the file that contains
@@ -161,10 +161,10 @@ smartsig keyword is entered in the buffer."
 
 Adds a signure with ID, the signature file being SIGNATURE, and for the
 given KEYWORDS."
-  (unless (cl-find id smartsig-sigs :test #'(lambda (id sig) (string= id (smartsig-id sig))))
+  (unless (cl-find id smartsig-sigs :test (lambda (id sig) (string= id (smartsig-id sig))))
     (push (make-smartsig :id id :keywords keywords :signature signature) smartsig-sigs)
     (cl-loop for keyword in keywords
-       do (define-abbrev (symbol-value smartsig-abbrev-table) keyword 1 `(lambda () (smartsig ,id))))))
+             do (define-abbrev (symbol-value smartsig-abbrev-table) keyword 1 `(lambda () (smartsig ,id))))))
 
 (defun smartsig-wordcount (word)
   "Count how many times WORD appears in the current buffer."
@@ -181,11 +181,9 @@ given KEYWORDS."
     (save-restriction
       (narrow-to-region (funcall smartsig-start-of-body-function) (funcall smartsig-end-of-body-function))
       (cl-loop for sig in smartsig-sigs
-         do (setf (smartsig-last-count sig) (cl-loop for keyword in (smartsig-keywords sig)
-                                               sum (smartsig-wordcount keyword))))
-      (sort (copy-sequence smartsig-sigs)
-            #'(lambda (x y)
-                (> (smartsig-last-count x) (smartsig-last-count y)))))))
+               do (setf (smartsig-last-count sig) (cl-loop for keyword in (smartsig-keywords sig)
+                                                           sum (smartsig-wordcount keyword))))
+      (sort (copy-sequence smartsig-sigs) (lambda (x y) (> (smartsig-last-count x) (smartsig-last-count y)))))))
 
 (defun smartsig-top (rankings)
   "Return the most popular signature choices in RANKINGS."
@@ -207,7 +205,7 @@ given KEYWORDS."
         ;; Was there a tie?
         (if (smartsig-tied-p sigs)
             ;; Yes. Ok, so, is ID in the list of tied signatures?
-            (let ((which (cl-position id sigs :test #'(lambda (id sig) (string= id (smartsig-id sig))))))
+            (let ((which (cl-position id sigs :test (lambda (id sig) (string= id (smartsig-id sig))))))
               (when which
                 ;; Yes, it is, use that one.
                 (nth which sigs)))
