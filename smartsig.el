@@ -215,7 +215,7 @@ given KEYWORDS."
 (defun smartsig-disabled-p (id)
   "Check if this smartsig check should be disabled.
 
-ID is the ID of the smart signire to check for."
+ID is the ID of the smart signature to check for."
   (cl-loop for check in smartsig-ignore-checks if (funcall check id) return t))
 
 (defun smartsig (id)
