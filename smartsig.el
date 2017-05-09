@@ -173,7 +173,7 @@ given KEYWORDS."
     (let ((re (format "\\b%s\\b" word)))
       (cl-loop while (re-search-forward re nil t)
          count t
-         do (incf (point))))))
+         do (cl-incf (point))))))
 
 (defun smartsig-rankings ()
   "Return a ranked list of signatures."
